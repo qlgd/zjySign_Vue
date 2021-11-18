@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <van-nav-bar title="Login" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="Login" />
     <van-skeleton :row="7" :loading="loading">
       <van-form @submit="onSubmit" class="login-from" round>
         <van-field
@@ -69,16 +69,13 @@ export default {
     return {
       loading: true,
       userInfo: {
-        username: '',
-        password: '',
+        username: 'qq666666',
+        password: 'Dd112211',
         invitationCode: this.$route.query.invitationCode || ''
       }
     }
   },
   methods: {
-    onClickLeft () {
-      this.$router.push('/user')
-    },
     async onSubmit () {
       this.$toast.loading({
         message: '登录ing...'
@@ -134,9 +131,6 @@ export default {
   // background: #f1f0f0;
   .van-nav-bar {
     background: #03ae84;
-  }
-  /deep/ .van-nav-bar .van-icon {
-    color: white;
   }
   /deep/ .van-nav-bar__title {
     color: white;

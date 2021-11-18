@@ -57,12 +57,15 @@
   :options="options"
   @select="onSelect"
 />
+<van-popup v-model="isQrShow" :style="{ height: '30%', width:'50%'}"><div class="qrcode" ref="qrCodeUrl"></div></van-popup>
+
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import { signCount, invite } from '@/Interface/User.js'
+import QRCode from 'qrcodejs2'
 export default {
   name: 'User',
   data () {
@@ -70,10 +73,11 @@ export default {
       currentRate: 10,
       signCount: 0,
       invite: 0,
+      isQrShow: false,
       showShare: false,
       options: [
-        { name: '复制链接', icon: 'link' },
-        { name: '邀请二维码', icon: 'qrcode' }
+        { id: 1, name: '邀请链接', icon: 'link' },
+        { id: 2, name: '邀请二维码', icon: 'qrcode' }
       ]
     }
   },
@@ -92,8 +96,15 @@ export default {
   },
   methods: {
     onSelect (option) {
-      this.$toast(option.name)
       this.showShare = false
+      if (option.id === 1) {
+        this.copyJSON('https://m.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode)
+      } else {
+        this.isQrShow = true
+        setTimeout(() => {
+          this.creatQrCode()
+        }, 50)
+      }
     },
     outLogin () {
       this.$dialog.confirm({
@@ -105,6 +116,30 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    async copyJSON (text) {
+      const target = document.createElement('input') // 创建input节点
+      target.value = text // 给input的value赋值
+      document.body.appendChild(target) // 向页面插入input节点
+      target.select() // 选中input
+      try {
+        await document.execCommand('Copy') // 执行浏览器复制命令
+        this.$toast.success('复制成功！')
+      } catch {
+        this.$toast.fail('复制失败！')
+      }
+      target.remove()
+    },
+    creatQrCode () {
+      const qr = new QRCode(this.$refs.qrCodeUrl, {
+        text: 'xxxx', // 需要转换为二维码的内容
+        width: 200,
+        height: 200,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      })
+      console.log(qr)
     }
   }
 }
@@ -140,4 +175,16 @@ export default {
     font-size: 27px;
   }
 }
+ .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .block {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+  }
 </style>

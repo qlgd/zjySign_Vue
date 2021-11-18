@@ -31,6 +31,53 @@ const routes = [
           title: '应用'
         },
         component: () => import('@/views/Apps')
+      },
+      {
+        path: '/index',
+        name: 'index',
+        component: () => import('@/views/index'),
+        children: [
+          {
+            path: 'card',
+            name: 'card',
+            meta: {
+              title: '使用卡密'
+            },
+            component: () => import('@/components/card.vue')
+          },
+          {
+            path: 'answer',
+            name: 'answer',
+            meta: {
+              title: '考中查答'
+            },
+            component: () => import('@/components/answer.vue')
+          },
+          {
+            path: 'integral',
+            name: 'integral',
+            meta: {
+              title: '使用积分'
+            },
+            component: () => import('@/components/integral.vue')
+          },
+          {
+            path: 'setting',
+            name: 'setting',
+            meta: {
+              title: '签到设置'
+            },
+            component: () => import('@/components/setting.vue')
+          },
+          {
+            path: 'subscribe',
+            name: 'subscribe',
+            meta: {
+              title: '订阅提醒'
+            },
+            component: () => import('@/components/subscribe.vue')
+          }
+        ]
       }
     ]
   },
