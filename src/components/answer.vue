@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="answer-container">
     <p>
-        考中查答
+      下版本更新
     </p>
 </div>
 </template>

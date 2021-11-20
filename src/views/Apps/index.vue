@@ -8,7 +8,7 @@
           :class="obj.class"
           aria-hidden="true"
           slot="icon"
-          style="color: skyblue"
+          style="color: #03ae84"
         ></i>
         <span slot="text" class="grid-item-text">{{obj.title}}</span>
       </van-grid-item>
@@ -20,7 +20,7 @@
           class="fa fa-spinner"
           aria-hidden="true"
           slot="icon"
-          style="color: skyblue"
+          style="color: #03ae84"
         ></i>
         <span slot="text" class="grid-item-text">开发ing..</span>
       </van-grid-item>

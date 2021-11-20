@@ -1,5 +1,6 @@
 <template>
   <div class="user-container">
+    <van-skeleton :row="17" :loading="loading">
     <div class="userInfo">
       <van-image
         round
@@ -43,6 +44,11 @@
     <i class="fa fa-users" style="color:#8E2DE2"></i> 邀请人数
         </div>
       </van-cell>
+                              <van-cell :value="timeOut">
+        <div class="user_title" slot="title">
+    <i class="fa fa-calendar-times-o" style="color:pink"></i> 签到到期时间
+        </div>
+      </van-cell>
     </van-cell-group>
     <br>
        <van-cell  @click="showShare = true" clickable >
@@ -59,12 +65,14 @@
 />
 <van-popup v-model="isQrShow" :style="{ height: '30%', width:'50%'}"><div class="qrcode" ref="qrCodeUrl"></div></van-popup>
 
+</van-skeleton>
+
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import { signCount, invite } from '@/Interface/User.js'
+import { signCount, invite, getTimeOut } from '@/Interface/User.js'
 import QRCode from 'qrcodejs2'
 export default {
   name: 'User',
@@ -75,6 +83,9 @@ export default {
       invite: 0,
       isQrShow: false,
       showShare: false,
+      timeOut: '',
+      loading: true,
+      count: 0,
       options: [
         { id: 1, name: '邀请链接', icon: 'link' },
         { id: 2, name: '邀请二维码', icon: 'qrcode' }
@@ -87,9 +98,15 @@ export default {
       this.signCount = data.data
       const res = await invite()
       this.invite = res.data.data
+      const res1 = await getTimeOut()
+      this.timeOut = res1.data.data.stopTime
     } catch (error) {
-      this.$notify({ type: 'danger', message: '请求失败！' })
+      console.log(error)
+      if (error.response.status === 403) {
+        this.timeOut = '未设置签到'
+      }
     }
+    this.loading = false
   },
   computed: {
     ...mapState(['user'])
@@ -101,9 +118,12 @@ export default {
         this.copyJSON('https://m.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode)
       } else {
         this.isQrShow = true
-        setTimeout(() => {
-          this.creatQrCode()
-        }, 50)
+        if (!this.count) {
+          this.$nextTick(() => {
+            this.creatQrCode()
+            this.count++
+          })
+        }
       }
     },
     outLogin () {
@@ -132,9 +152,9 @@ export default {
     },
     creatQrCode () {
       const qr = new QRCode(this.$refs.qrCodeUrl, {
-        text: 'xxxx', // 需要转换为二维码的内容
-        width: 200,
-        height: 200,
+        text: 'https://m.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode, // 需要转换为二维码的内容
+        width: 100,
+        height: 100,
         colorDark: '#000000',
         colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.H
@@ -174,6 +194,10 @@ export default {
   .user_title{
     font-size: 27px;
   }
+  /deep/ .qrcode   img {
+    width: 100% !important;
+    height: 100% !important;
+}
 }
  .wrapper {
     display: flex;

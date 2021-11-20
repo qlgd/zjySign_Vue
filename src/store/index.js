@@ -14,6 +14,15 @@ export default new Vuex.Store({
     setUser (state, payload) {
       state.user = payload
       setItem(USER_TOKEN, payload)
+    },
+    addintegral (state, integral) {
+      state.user.userInfo.integral += integral
+    },
+    subintegral (state, integral) {
+      state.user.userInfo.integral -= integral
+    },
+    qqmsg (state, qq) {
+      state.user.userInfo.qq = qq
     }
   },
   actions: {

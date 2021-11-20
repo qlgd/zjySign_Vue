@@ -1,8 +1,7 @@
 <template>
   <div class="login-container">
     <van-nav-bar title="Login" />
-    <van-skeleton :row="7" :loading="loading">
-      <van-form @submit="onSubmit" class="login-from" round>
+   <van-form @submit="onSubmit" class="login-from" round>
         <van-field
           v-model="userInfo.username"
           name="username"
@@ -57,7 +56,6 @@
           </div>
         </div>
       </van-form>
-    </van-skeleton>
   </div>
 </template>
 
@@ -67,7 +65,6 @@ export default {
   name: 'Login',
   data () {
     return {
-      loading: true,
       userInfo: {
         username: 'qq666666',
         password: 'Dd112211',
@@ -118,9 +115,6 @@ export default {
         }
       }
     }
-  },
-  mounted () {
-    this.loading = false
   }
 }
 </script>
