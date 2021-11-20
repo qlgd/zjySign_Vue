@@ -112,10 +112,13 @@ export default {
         const {
           data: { data }
         } = await getClassStatus(courseId)
-        this.courseList.forEach((obj) => {
-          obj.delay = data.delay
-          obj.status = data.status
-        })
+        const courseObj = this.courseList.find(item => item.courseOpenId === data.courseId)
+        console.log(courseObj)
+        courseObj.delay = data.delay
+        courseObj.status = data.status
+        // this.courseList.forEach((obj) => {
+        //   const courseObj = data.find(item => item.courseId === courseId)
+        // })
       } catch (error) {
         this.$notify({ type: 'danger', message: '网络错误' })
       }
@@ -139,6 +142,7 @@ export default {
     'courseItem.checked': function (val) {
       val ? this.courseItem.status = 1 : this.courseItem.status = 2
     }
+
   }
 }
 </script>
