@@ -1,6 +1,14 @@
 <template>
  <div class="home-container">
 <van-nav-bar :left-text='toDay' right-text='•••' />
+本站自动签到程序采用分布式运行.安全稳定快速
+使用步骤：
+1.使用卡密
+2.使用积分
+3.设置签到
+4.邀请人免费得2积分，也就是一个月自动签到权限。
+5.不想邀请人也可以选择钞能力，2块钱10积分 联系QQ：3403106098
+本站采用前后端分离(springboot,redis)，源码包搭建包更新
   </div>
 </template>
 

@@ -66,8 +66,8 @@ export default {
   data () {
     return {
       userInfo: {
-        username: 'qq666666',
-        password: 'Dd112211',
+        username: '',
+        password: '',
         invitationCode: this.$route.query.invitationCode || ''
       }
     }
