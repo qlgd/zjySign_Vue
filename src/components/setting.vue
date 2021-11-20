@@ -57,7 +57,8 @@
 import {
   signNO,
   getLearnningCourseList,
-  getClassStatus
+  getClassStatus,
+  settingCourseSign
 } from '@/Interface/Sign.js'
 export default {
   name: 'setting',
@@ -113,19 +114,34 @@ export default {
           data: { data }
         } = await getClassStatus(courseId)
         const courseObj = this.courseList.find(item => item.courseOpenId === data.courseId)
-        console.log(courseObj)
-        courseObj.delay = data.delay
-        courseObj.status = data.status
-        // this.courseList.forEach((obj) => {
-        //   const courseObj = data.find(item => item.courseId === courseId)
-        // })
+        this.$set(courseObj, 'delay', data.delay)
+        this.$set(courseObj, 'status', data.status)
       } catch (error) {
         this.$notify({ type: 'danger', message: '网络错误' })
       }
       this.loading = false
     },
-    onChangeDelay (val) {
-
+    async   onChangeDelay () {
+      this.courseItem.loading = true
+      if (this.courseItem.checked) {
+        this.courseItem.status = 1
+      } else {
+        this.courseItem.status = 2
+      }
+      try {
+        await settingCourseSign({
+          courseId: this.courseItem.courseId,
+          courseName: this.courseItem.courseName,
+          delay: this.courseItem.delay,
+          status: this.courseItem.status
+        })
+        const i = this.courseList.findIndex(obj => obj.courseOpenId === this.courseItem.courseId)
+        this.$set(this.courseList[i], 'delay', this.courseItem.delay)
+        this.$set(this.courseList[i], 'status', this.courseItem.status)
+      } catch (error) {
+        this.$notify({ type: 'danger', message: '网络错误' })
+      }
+      this.courseItem.loading = false
     },
     clickCourse (obj) {
       this.show = true
@@ -138,11 +154,7 @@ export default {
   watch: {
     'courseItem.status': function (val) {
       val === 1 ? this.courseItem.checked = true : this.courseItem.checked = false
-    },
-    'courseItem.checked': function (val) {
-      val ? this.courseItem.status = 1 : this.courseItem.status = 2
     }
-
   }
 }
 </script>
