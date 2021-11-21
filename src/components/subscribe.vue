@@ -20,7 +20,7 @@
     :rules="[{ required: true, message: '请填写QQ' }]"
   />
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">订阅</van-button>
+    <van-button round block type="info" native-type="submit" :loading="loading">订阅</van-button>
   </div>
 </van-form>
   </van-tab>
@@ -54,7 +54,8 @@ export default {
     return {
       active: 0,
       qq: '',
-      imgUrl: ''
+      imgUrl: '',
+      loading: false
     }
   },
   created () {
@@ -68,12 +69,14 @@ export default {
   },
   methods: {
     async onSubmit ({ qq }) {
+      this.loading = true
       try {
         await setQQMsg(qq)
         this.$notify({ type: 'success', message: 'QQ订阅成功！\n加群才能获取提醒' })
       } catch (error) {
         this.$notify({ type: 'danger', message: '订阅失败\n请稍后重试！' })
       }
+      this.loading = false
     },
     async  getQrcode () {
       try {

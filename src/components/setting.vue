@@ -31,7 +31,7 @@
           </div>
         </van-cell>
       </van-cell-group>
-      <van-popup v-model="show" position="top" :style="{ height: '40%'}"  >
+      <van-popup v-model="show" position="top" :style="{ height: '50%'}"  >
       <br>
       <p style="text-align:center">{{courseItem.courseName}}</p>
 <van-cell title="自动签到开关" icon="shop-o">
@@ -147,7 +147,7 @@ export default {
       this.show = true
       this.courseItem.courseName = obj.courseName
       this.courseItem.courseId = obj.courseOpenId
-      this.courseItem.delay = obj.delay
+      this.courseItem.delay = obj.delay || 0
       this.courseItem.status = obj.status
     }
   },
@@ -161,6 +161,10 @@ export default {
 
 <style lang='less' scoped>
 .setting-container {
+
+ /deep/ .van-hairline--top-bottom{
+padding-bottom: 100px !important;
+  }
   .van-cell {
     align-items: center;
     /deep/ .van-image__img {
@@ -185,8 +189,8 @@ export default {
  .custom-button {
     width: 66px;
     color: #fff;
-    font-size: 10px;
-    line-height: 28px;
+    font-size: 20px;
+    line-height: 48px;
     text-align: center;
     background-color: #03ae84;
     border-radius: 100px;

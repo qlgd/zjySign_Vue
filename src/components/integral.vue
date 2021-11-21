@@ -9,7 +9,7 @@
 <br>
 <van-form @submit="onSubmit">
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">使用积分购买1/月签到功能</van-button>
+    <van-button round block type="info" native-type="submit" :loading='loading'>使用积分购买1/月签到功能</van-button>
   </div>
 </van-form>
 </div>
@@ -20,13 +20,19 @@ import { useintegral } from '@/Interface/Recharge.js'
 import { mapMutations } from 'vuex'
 export default {
   name: 'integral',
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
     ...mapMutations(['subintegral']),
     async onSubmit () {
+      this.loading = true
       try {
         await useintegral()
         this.$notify({ type: 'success', message: '使用积分成功\n成功续期一个月' })
-        this.subintegral(10)
+        this.subintegral(2)
       } catch (error) {
         if (error.response.status === 403) {
           this.$notify({ type: 'danger', message: '积分不足,请先购买卡密' })
@@ -34,6 +40,7 @@ export default {
           this.$notify({ type: 'danger', message: '网络异常，请稍后重试..' })
         }
       }
+      this.loading = false
     }
   }
 }

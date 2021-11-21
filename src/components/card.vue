@@ -15,7 +15,7 @@
     :rules="[{ required: true, message: '请填写卡密' }]"
   />
   <div style="margin: 16px;">
-    <van-button round block type="info" native-type="submit">使用</van-button>
+    <van-button round block type="info" native-type="submit" :loading='loading'>使用</van-button>
   </div>
 </van-form>
 </div>
@@ -28,13 +28,15 @@ export default {
   name: 'card',
   data () {
     return {
-      card: ''
+      card: '',
+      loading: false
     }
   },
 
   methods: {
     ...mapMutations(['addintegral']),
     async onSubmit ({ card }) {
+      this.loading = true
       try {
         await useKey(card)
         this.$notify({ type: 'success', message: '使用卡密成功\n积分+10' })
@@ -46,6 +48,7 @@ export default {
           this.$notify({ type: 'danger', message: '网络异常，请稍后重试..' })
         }
       }
+      this.loading = false
     }
   }
 }
