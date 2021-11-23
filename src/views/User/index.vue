@@ -1,6 +1,7 @@
 <template>
   <div class="user-container">
-    <van-skeleton :row="17" :loading="loading">
+    <van-skeleton :row="17" :loading="loading"
+    >
     <div class="userInfo">
       <van-image
         round
@@ -167,6 +168,9 @@ export default {
 
 <style lang="less" scoped>
 .user-container {
+  .van-skeleton{
+  padding: 30px;
+  }
   .userInfo {
     height: 200px;
     background: #03ae84;
