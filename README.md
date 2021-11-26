@@ -1,24 +1,32 @@
-# zjy-sign
+# 职教云小助手
 
-## Project setup
+
+### 技术栈： 
+
+- vue
+- vuex
+- vue-router
+- axios
+- vant
+- dayjs
+
+### 项目功能：
+
+自动签到 -可指定某个课程开关 延迟课程签到时间
+
+考中查答 - 可在考中查询作业&考试答案
+
+## 1.安装
 ```
-yarn install
+yarn
 ```
 
-### Compiles and hot-reloads for development
+### 2.启动
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### 3.打包
 ```
 yarn build
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
