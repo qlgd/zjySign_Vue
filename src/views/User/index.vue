@@ -116,7 +116,7 @@ export default {
     onSelect (option) {
       this.showShare = false
       if (option.id === 1) {
-        this.copyJSON('https://m.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode)
+        this.copyJSON('https://api.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode)
       } else {
         this.isQrShow = true
         if (!this.count) {
@@ -153,7 +153,7 @@ export default {
     },
     creatQrCode () {
       const qr = new QRCode(this.$refs.qrCodeUrl, {
-        text: 'https://m.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode, // 需要转换为二维码的内容
+        text: 'https://api.cssun.cn/#/login?invitationCode=' + this.user.userInfo.invitationCode, // 需要转换为二维码的内容
         width: 100,
         height: 100,
         colorDark: '#000000',

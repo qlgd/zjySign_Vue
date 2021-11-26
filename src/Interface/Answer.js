@@ -8,7 +8,7 @@ export const getHomeworkListAnswers = data => request({
 })
 
 // 考试答案
-export const onlineExamAnswers = data => request({
+export const getOnlineExamAnswers = data => request({
   method: 'POST',
   url: '/vec/onlineExamAnswers',
   data

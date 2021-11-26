@@ -5,13 +5,13 @@ import { Toast } from 'vant'
 
 const request = axios.create({
   baseURL: 'https://res.cssun.cn',
-  timeout: 5000
+  timeout: 10000
 })
 
 request.interceptors.request.use(config => {
   const { user } = store.state
   if (user && user.authorization) {
-    config.headers.Authorization = `Bearer ${user.authorization}`
+    config.headers.Authorization = `${user.authorization}`
   }
   return config
 })
